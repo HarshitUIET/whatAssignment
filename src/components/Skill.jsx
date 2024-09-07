@@ -7,6 +7,30 @@ import { toast, ToastContainer } from 'react-toastify';
 
 const Skill = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [rank, setRank] = useState('');
+    const [percentile, setPercentile] = useState('');
+    const [score, setScore] = useState('');
+
+    const [finalRank, setFinalRank] = useState('11');
+    const [finalPercentile, setFinalPercentile] = useState('92');
+    const [finalScore, setFinalScore] = useState('8');
+
+    // Load data from localStorage only on client-side
+    useEffect(() => {
+        const storedRank = localStorage.getItem('rank') || '';
+        const storedPercentile = localStorage.getItem('percentile') || '';
+        const storedScore = localStorage.getItem('score') || '';
+        const storedFinalRank = localStorage.getItem('finalRank') || '11';
+        const storedFinalPercentile = localStorage.getItem('finalPercentile') || '92';
+        const storedFinalScore = localStorage.getItem('finalScore') || '8';
+
+        setRank(storedRank);
+        setPercentile(storedPercentile);
+        setScore(storedScore);
+        setFinalRank(storedFinalRank);
+        setFinalPercentile(storedFinalPercentile);
+        setFinalScore(storedFinalScore);
+    }, []);
 
     const openDialog = () => setIsDialogOpen(true);
     const closeDialog = () => setIsDialogOpen(false);
@@ -15,39 +39,23 @@ const Skill = () => {
     const [percentileError, setPercentileError] = useState(false);
     const [scoreError, setScoreError] = useState(false);
 
-    const [rank, setRank] = useState(() => localStorage.getItem('rank') || '');
-    const [percentile, setPercentile] = useState(() => localStorage.getItem('percentile') || '');
-    const [score, setScore] = useState(() => localStorage.getItem('score') || '');
-
-    const [finalRank, setFinalRank] = useState(localStorage.getItem('finalRank') || '11');
-    const [finalPercentile, setFinalPercentile] = useState(localStorage.getItem('finalPercentile') || '92');
-    const [finalScore, setFinalScore] = useState(localStorage.getItem('finalScore') || '8');
-
     const RankChangeHandler = (value) => {
         setRank(value);
-        localStorage.setItem('rank', value);
         setRankError(value === '');
-    }
+    };
 
     const PercentileChangeHanlder = (value) => {
         setPercentile(value);
-        localStorage.setItem('percentile', value);
         setPercentileError(value === '');
-    }
+    };
 
     const ScoreChangeHandler = (value) => {
         setScore(value);
-        localStorage.setItem('score', value);
         setScoreError(value === '');
-    }
+    };
 
     const validateForm = (e) => {
         e.preventDefault();
-        console.log('Form submitted');
-        console.log('Rank:', rank);
-        console.log('Percentile:', percentile);
-        console.log('Score:', score);
-
         let hasError = false;
 
         if (rank === '' || percentile === '' || score === '') {
@@ -69,7 +77,6 @@ const Skill = () => {
             }
         }
 
-
         if (isNaN(rank) || isNaN(percentile) || isNaN(score)) {
             if (isNaN(rank)) {
                 setRankError(true);
@@ -84,13 +91,11 @@ const Skill = () => {
             return;
         }
 
-
         if (percentile < 1 || percentile > 100) {
             setPercentileError(true);
             toast.error('Percentile must be between 1 and 100');
             return;
         }
-
 
         if (score < 0 || score > 15) {
             setScoreError(true);
@@ -116,23 +121,13 @@ const Skill = () => {
 
         toast.success('Score Updated successfully');
         closeDialog();
-    }
-
-    useEffect(() => {
-        setRank(localStorage.getItem('rank') || '');
-        setPercentile(localStorage.getItem('percentile') || '');
-        setScore(localStorage.getItem('score') || '');
-        setFinalRank(localStorage.getItem('finalRank') || '11');
-        setFinalPercentile(localStorage.getItem('finalPercentile') || '92');
-        setFinalScore(localStorage.getItem('finalScore') || '8');
-    }, []);
-
+    };
 
     return (
         <div className="flex flex-col px-4 py-4 text-black space-y-4 w-full">
             <div>Skill Test</div>
-            <div className=" flex flex-col space-y-4 lg:flex-row  w-full">
-                <div className=" w-full lg:w-1/2 flex flex-col space-y-4">
+            <div className="flex flex-col space-y-4 lg:flex-row w-full">
+                <div className="w-full lg:w-1/2 flex flex-col space-y-4">
                     <div className='border rounded-md py-4 px-4'>
                         <div className='flex space-x-3 justify-between items-center'>
                             <div>
@@ -140,9 +135,9 @@ const Skill = () => {
                             </div>
                             <div className='flex flex-col'>
                                 <div className='font-bold'>Hyper Text Markup Language</div>
-                                <div>Questions : 08 | Duration : 15 mins | Submitted on 5 June 2021</div>
+                                <div>Questions: 08 | Duration: 15 mins | Submitted on 5 June 2021</div>
                             </div>
-                            <div className=''>
+                            <div>
                                 <button
                                     className='bg-blue-900 text-white px-4 py-2 rounded-md'
                                     onClick={openDialog}
@@ -152,16 +147,15 @@ const Skill = () => {
                             </div>
                         </div>
                     </div>
-                    <div className=''>
-                        <div className='flex flex-col  rounded-md space-y-2 border py-4 px-2'>
+                    <div>
+                        <div className='flex flex-col rounded-md space-y-2 border py-4 px-2'>
                             <div className='font-bold'>Quick Statistics</div>
-                            <div className='flex  justify-between space-x-3'>
+                            <div className='flex justify-between space-x-3'>
                                 <div className='flex flex-col space-y-2 md:space-y-0 md:flex-row md:justify-between lg:flex-col lg:space-y-2 xl:space-y-0 xl:flex-row xl:justify-between px-2 space-x-2 md:space-x-6'>
                                     <div className='flex space-x-4 px-2 lg:px-6 xl:px-0'>
                                         <div className="rounded-full bg-gray-100 border flex justify-center items-center w-10 h-10 sm:w-12 sm:h-12">
                                             <Image className="p-1 sm:p-2" src="/trophyfinal.png" alt="Trophy" layout="intrinsic" width={40} height={40} />
                                         </div>
-
                                         <div className='flex flex-col mt-1'>
                                             <div className='font-bold'>{finalRank}</div>
                                             <div className='flex text-gray-500'>YOUR RANK</div>
@@ -169,7 +163,9 @@ const Skill = () => {
                                     </div>
                                     <div className='h-full hidden md:block w-[1px] border'></div>
                                     <div className='flex space-x-4'>
-                                        <div className='rounded-full bg-gray-100 border flex justify-center items-center w-10 h-10 sm:w-12 sm:h-12 '><Image className='p-1 sm:p-2' layout="intrinsic" src='/paperboard.png' width={40} height={40} /> </div>
+                                        <div className='rounded-full bg-gray-100 border flex justify-center items-center w-10 h-10 sm:w-12 sm:h-12'>
+                                            <Image className='p-1 sm:p-2' layout="intrinsic" src='/paperboard.png' width={40} height={40} />
+                                        </div>
                                         <div className='flex flex-col mt-1'>
                                             <div className='font-bold'>{finalPercentile}%</div>
                                             <div className='text-gray-500'>PERCENTILE</div>
@@ -177,7 +173,9 @@ const Skill = () => {
                                     </div>
                                     <div className='h-full hidden md:block w-[1px] border'></div>
                                     <div className='flex space-x-4'>
-                                        <div className='rounded-full bg-gray-100 border flex justify-center items-center w-10 h-10 sm:w-12 sm:h-12'><Image layout="intrinsic" className='p-1 sm:p-2' src='/greentick.png' width={40} height={40} /> </div>
+                                        <div className='rounded-full bg-gray-100 border flex justify-center items-center w-10 h-10 sm:w-12 sm:h-12'>
+                                            <Image layout="intrinsic" className='p-1 sm:p-2' src='/greentick.png' width={40} height={40} />
+                                        </div>
                                         <div className='flex flex-col mt-1'>
                                             <div className='font-bold'>{finalScore}/15</div>
                                             <div className='text-gray-500'>CORRECT ANSWERS</div>
@@ -199,7 +197,9 @@ const Skill = () => {
                                 </div>
                             </div>
                             <div>
-                                <div className='rounded-full left-2 bg-gray-100 border '><Image className='py-2 px-2' src='/comparison.png' width={40} height={40} /> </div>
+                                <div className='rounded-full left-2 bg-gray-100 border'>
+                                    <Image className='py-2 px-2' src='/comparison.png' width={40} height={40} />
+                                </div>
                             </div>
                         </div>
                         <div className='flex items-center justify-center'>
@@ -207,7 +207,7 @@ const Skill = () => {
                         </div>
                     </div>
                 </div>
-                <div className="w-full lg:w-1/2  lg:ml-4">
+                <div className="w-full lg:w-1/2 lg:ml-4">
                     <div className='flex flex-col space-y-4'>
                         <div className='flex px-4 py-4 border rounded-md flex-col space-y-8'>
                             <div className='font-bold'>Syllabus Wise Analysis</div>
@@ -255,7 +255,7 @@ const Skill = () => {
                             </div>
                             <div>
                                 <span className='font-bold text-gray-500'>You Scored {finalScore} questions correct out of 15.</span>
-                                <span className='text-gray-600'>However it still needs some improvements.</span>
+                                <span className='text-gray-600'>However, it still needs some improvements.</span>
                             </div>
                             <div className='flex items-center justify-center'>
                                 <HollowCircleChart score={finalScore} />
@@ -269,14 +269,14 @@ const Skill = () => {
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
                     <div className="bg-white rounded-lg p-6 w-[80%] md:w-[45%]">
                         <form onSubmit={validateForm}>
-                            <div className='flex justify-between '>
+                            <div className='flex justify-between'>
                                 <h3 className="text-lg font-bold mb-4">Update Scores</h3>
                                 <Image src='/html.png' alt="html" width={50} height={50} />
                             </div>
-                            <div className='flex flex-col space-y-4 md:space-y-2 my-4 '>
+                            <div className='flex flex-col space-y-4 md:space-y-2 my-4'>
                                 <div className='flex flex-col space-y-2 md:flex-row md:justify-between space-x-2'>
                                     <div className='flex space-x-4'>
-                                        <div className='rounded-full bg-blue-900 px-3 text-white py-1 h-[30px] '>
+                                        <div className='rounded-full bg-blue-900 px-3 text-white py-1 h-[30px]'>
                                             1
                                         </div>
                                         <div className='text-lg'>
@@ -293,7 +293,7 @@ const Skill = () => {
                                 </div>
                                 <div className='flex flex-col space-y-2 md:flex-row md:justify-between space-x-2'>
                                     <div className='flex space-x-4'>
-                                        <div className='rounded-full bg-blue-900 px-3 h-[30px] text-white py-1 '>
+                                        <div className='rounded-full bg-blue-900 px-3 h-[30px] text-white py-1'>
                                             2
                                         </div>
                                         <div className='text-lg'>
@@ -310,11 +310,11 @@ const Skill = () => {
                                 </div>
                                 <div className='flex flex-col space-y-2 md:flex-row md:justify-between space-x-2'>
                                     <div className='flex space-x-4'>
-                                        <div className='rounded-full bg-blue-900 h-[30px] px-3 text-white py-1 '>
+                                        <div className='rounded-full bg-blue-900 h-[30px] px-3 text-white py-1'>
                                             3
                                         </div>
                                         <div className='text-lg'>
-                                            Update Your <span className='font-bold'>Current Score(out of 15)</span>
+                                            Update Your <span className='font-bold'>Current Score (out of 15)</span>
                                         </div>
                                     </div>
                                     <div>
@@ -327,8 +327,6 @@ const Skill = () => {
                                     </div>
                                 </div>
                             </div>
-
-
                             <div className="flex justify-end space-x-2">
                                 <button
                                     className="bg-gray-300 text-black px-4 py-2 rounded-md"
@@ -347,6 +345,8 @@ const Skill = () => {
                     </div>
                 </div>
             )}
+
+            <ToastContainer />
         </div>
     );
 };
