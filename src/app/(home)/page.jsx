@@ -44,7 +44,7 @@ export default function Home() {
                 />
               </div>
               <div className="font-bold py-1 font-serif text-black text-sm">
-                Harshit Pachauri
+                Harshit
               </div>
             </div>
           </div>
