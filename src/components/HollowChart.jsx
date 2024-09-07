@@ -1,4 +1,4 @@
-// HollowCircleChart.js
+
 import { ArcElement, Chart } from 'chart.js';
 Chart.register(ArcElement);
 

@@ -9,7 +9,7 @@ import Dashboard from "@/components/Dashboard";
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState("Dashboard");
+  const [activeItem, setActiveItem] = useState("Skill Test");
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -44,7 +44,7 @@ export default function Home() {
                 />
               </div>
               <div className="font-bold py-1 font-serif text-black text-sm">
-                Rahil Siddique
+                Harshit Pachauri
               </div>
             </div>
           </div>

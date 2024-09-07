@@ -5,9 +5,6 @@ import HollowCircleChart from './HollowChart';
 import PercentileLineChart from './PercentileChart';
 import { toast, ToastContainer } from 'react-toastify';
 
-const data = [5, 15, 30, 10, 2];
-const userPercentile = 30;
-
 const Skill = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -206,7 +203,7 @@ const Skill = () => {
                             </div>
                         </div>
                         <div className='flex items-center justify-center'>
-                            <PercentileLineChart percentile={userPercentile} />
+                            <PercentileLineChart percentile={finalPercentile} />
                         </div>
                     </div>
                 </div>
